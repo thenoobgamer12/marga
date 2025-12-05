@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const multer = require('multer');
+const xlsx = require('xlsx');
 const { processCommand } = require('./commandProcessor');
 const { processImport } = require('./importProcessor');
 const { readDb } = require('./database');
@@ -7,9 +9,13 @@ const { readDb } = require('./database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// --- Middleware & Setup ---
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Setup multer for file uploads in memory
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // --- HTML Page Routes ---
 app.get('/', (req, res) => {
@@ -62,18 +68,25 @@ app.post('/api/command', async (req, res) => {
   }
 });
 
-// Data Import
-app.post('/api/import', async (req, res) => {
+// Data Import - now handles file uploads
+app.post('/api/import', upload.single('importFile'), async (req, res) => {
     try {
-        const { user, clients, sessions } = req.body;
+        // User data is now sent as a string in a multipart form
+        const user = JSON.parse(req.body.user);
         if (!user) {
             return res.status(401).json({ success: false, message: 'Authentication required.' });
         }
-        const result = await processImport({ clients, sessions }, user);
+
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'No file uploaded.' });
+        }
+
+        // Pass the file buffer to the import processor
+        const result = await processImport(req.file.buffer, user);
         res.json(result);
     } catch (error) {
         console.error('Server Error in /api/import:', error);
-        res.status(500).json({ success: false, message: 'An internal server error occurred.' });
+        res.status(500).json({ success: false, message: 'An internal server error occurred while importing.' });
     }
 });
 

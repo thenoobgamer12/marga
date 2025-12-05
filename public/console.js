@@ -77,51 +77,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Handle file selection for import
-    fileUploader.addEventListener('change', (e) => {
+    fileUploader.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        addMessage(`Reading file: ${file.name}...`, 'response');
+        addMessage(`Uploading and processing file: ${file.name}...`, 'response');
         setFormDisabled(true);
 
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-            try {
-                const data = new Uint8Array(event.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
+        try {
+            const formData = new FormData();
+            formData.append('importFile', file);
+            formData.append('user', JSON.stringify(user)); // Send user data along with the file
 
-                // Read clients from the first sheet
-                const clientSheetName = workbook.SheetNames[0];
-                const clientSheet = workbook.Sheets[clientSheetName];
-                const clients = XLSX.utils.sheet_to_json(clientSheet);
+            const res = await fetch('/api/import', {
+                method: 'POST',
+                body: formData, // Browser will set the Content-Type to multipart/form-data
+            });
 
-                // Read sessions from the second sheet (if it exists)
-                let sessions = [];
-                if (workbook.SheetNames.length > 1) {
-                    const sessionSheetName = workbook.SheetNames[1];
-                    const sessionSheet = workbook.Sheets[sessionSheetName];
-                    sessions = XLSX.utils.sheet_to_json(sessionSheet);
-                }
-                
-                const res = await fetch('/api/import', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user, clients, sessions }),
-                });
-
-                if (!res.ok) throw new Error(`Server responded with status: ${res.status}`);
-
-                const result = await res.json();
-                addMessage(result.message, 'response', !result.success);
-
-            } catch (error) {
-                addMessage(`Import Error: ${error.message}`, 'response', true);
-            } finally {
-                setFormDisabled(false);
-                fileUploader.value = ''; // Reset file input
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => ({ message: `Server responded with status: ${res.status}` }));
+                throw new Error(errorData.message);
             }
-        };
-        reader.readAsArrayBuffer(file);
+
+            const result = await res.json();
+            addMessage(result.message, 'response', !result.success);
+
+        } catch (error) {
+            addMessage(`Import Error: ${error.message}`, 'response', true);
+        } finally {
+            setFormDisabled(false);
+            fileUploader.value = ''; // Reset file input
+        }
     });
 
     // Handle logout
