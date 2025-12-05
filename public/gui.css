@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Basic Reset & Body Styling */
+body {
+    margin: 1rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #dee2e6;
+}
+
+#app-container {
+    display: flex;
+}
+
+/* --- Sidebar --- */
+#sidebar {
+    width: 220px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+
+#sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#sidebar nav a {
+    text-decoration: none;
+    color: #343a40;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+#sidebar nav a:hover {
+    background-color: #e9ecef;
+}
+
+#sidebar nav a.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#nav-cli {
+    margin-top: auto;
+    text-align: center;
+    text-decoration: none;
+    color: #6c757d;
+    padding: 0.5rem;
+}
+
+#nav-logout {
+    text-align: center;
+    text-decoration: none;
+    color: #dc3545;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+#nav-logout:hover {
+    background-color: #f8d7da;
+}
+
+/* --- Main Content --- */
+#main-content {
+    flex: 1;
+    padding: 2rem 3rem;
+    overflow-y: auto;
+}
+
+/* Specific view styles will be added here later */
+.clients-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.clients-list-header h1 {
+    margin: 0;
+}
+
+.clients-list-header button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.clients-list-header button:hover {
+    background-color: #0056b3;
+}
+
+.search-container {
+    flex-grow: 1;
+    margin: 0 2rem;
+}
+
+#client-search {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.clients-list-header .add-new-client-btn {
+    background-color: #28a745;
+}
+
+.clients-list-header .add-new-client-btn:hover {
+    background-color: #218838;
+}
+
+.client-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.client-list-table th,
+.client-list-table td {
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.client-list-table th {
+    font-weight: 600;
+}
+
+.client-list-table tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+/* --- Schedule View Styles --- */
+.schedule-day-header {
+    margin: 2rem 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.schedule-day {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.session-block {
+    background-color: #e9ecef;
+    border-left: 5px solid #007bff;
+    padding: 1rem 1.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.session-time {
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 150px;
+}
+
+.session-client {
+    font-weight: 500;
+    flex: 1;
+}
+
+.session-type {
+    color: #6c757d;
+}
+
+/* --- Modal Styles --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 700px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#client-details-content h2 {
+    color: #007bff;
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#client-details-content p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+#client-details-content p strong {
+    color: #343a40;
+}
+
+#client-details-content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#client-details-content a:hover {
+    text-decoration: underline;
+}
+
+/* --- Form Styles for Modal --- */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important */
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.form-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.form-actions button.cancel-btn {
+    background-color: #6c757d;
+}
+
+.form-actions button.edit-btn {
+    background-color: #ffc107;
+    color: #212529;
+}

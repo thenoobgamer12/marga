@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Console</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div id="console-container">
+        <div id="header">
+            <div class="logo-container">
+                <img src="logo.jpg" alt="Marga Mindwellness Studio Logo" class="logo">
+                <p>Marga Mindwellness Console</p>
+            </div>
+            <div>
+                <a href="/gui.html" class="nav-link">Switch to GUI</a>
+                <button id="logout-button">Logout</button>
+            </div>
+        </div>
+        <div id="message-log" class="message-log">
+            <!-- Messages will be injected here by script.js -->
+        </div>
+        <form id="command-form" class="command-form">
+            <span class="prompt">~ $</span>
+            <input type="text" id="command-input" placeholder="Type a command..." autocomplete="off" required>
+            <button type="submit" id="send-button">Send</button>
+            <button type="button" id="import-button" class="import-button">Import from Excel</button>
+            <input type="file" id="file-uploader" accept=".xlsx, .xls" style="display: none;">
+        </form>
+    </div>
+    <script src="console.js"></script>
+</body>
+</html>

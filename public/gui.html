@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUI - Marga Mindwellness Studio</title>
+    <link rel="stylesheet" href="gui.css">
+</head>
+<body>
+    <div id="app-container">
+        <div id="sidebar">
+            <div class="logo-container">
+                <img src="logo.jpg" alt="Marga Mindwellness Studio Logo" class="logo">
+                <div class="logo-text">Mārga</div>
+            </div>
+            <nav>
+                <a href="#" id="nav-clients" class="active">Clients</a>
+                <a href="#" id="nav-schedule">Schedule</a>
+            </nav>
+            <a href="#" id="nav-logout">Logout</a>
+            <a href="/console.html" id="nav-cli">Switch to CLI</a>
+        </div>
+        <main id="main-content">
+            <!-- Content will be injected here by gui.js -->
+        </main>
+    </div>
+
+    <div id="client-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="client-details-content">
+                <!-- Client details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="add-session-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Add New Session</h2>
+            <form id="add-session-form">
+                <div class="form-group">
+                    <label for="session-client-id">Client</label>
+                    <select id="session-client-id" name="clientId" required>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="session-date">Date</label>
+                    <input type="date" id="session-date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="session-time">Start Time</label>
+                    <input type="time" id="session-time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="session-duration">Duration (minutes)</label>
+                    <input type="number" id="session-duration" name="duration" min="1" value="50" required>
+                </div>
+                <div class="form-group">
+                    <label for="session-type">Session Type</label>
+                    <input type="text" id="session-type" name="type" value="Individual">
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Add Session</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-client-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Add New Client</h2>
+            <form id="add-client-form">
+                <div class="form-group">
+                    <label for="client-id">Client ID</label>
+                    <input type="text" id="client-id" name="clientId" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-name">Name</label>
+                    <input type="text" id="client-name" name="name" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Add Client</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="gui.js"></script>
+</body>
+</html>
